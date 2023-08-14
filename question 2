@@ -1,0 +1,66 @@
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    
+    public TreeNode(int val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+public class ModifyBST {
+    // Function to traverse the original BST in-order and extract node values
+    private static void extractNodeValues(TreeNode root, List<Integer> values) {
+        if (root == null) {
+            return;
+        }
+        extractNodeValues(root.left, values);
+        values.add(root.val);
+        extractNodeValues(root.right, values);
+    }
+    
+    // Function to create a skewed tree with only right children
+    private static TreeNode createSkewedTree(List<Integer> values, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+        int mid = (start + end) / 2;
+        TreeNode newNode = new TreeNode(values.get(mid));
+        newNode.right = createSkewedTree(values, mid + 1, end);
+        return newNode;
+    }
+    
+    // Function to display node values in ascending order
+    private static void displayAscending(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        displayAscending(root.left);
+        System.out.print(root.val + " ");
+        displayAscending(root.right);
+    }
+    
+    public static void main(String[] args) {
+        // Construct the original Complete BST (you can implement your own)
+        TreeNode root = new TreeNode(10);
+        root.left = new TreeNode(5);
+        root.right = new TreeNode(15);
+        root.left.left = new TreeNode(2);
+        root.left.right = new TreeNode(8);
+        root.right.left = new TreeNode(12);
+        root.right.right = new TreeNode(18);
+        
+        // Extract node values from the original BST
+        List<Integer> values = new ArrayList<>();
+        extractNodeValues(root, values);
+        
+        // Create a skewed tree with only right children
+        TreeNode skewedRoot = createSkewedTree(values, 0, values.size() - 1);
+        
+        // Display node values in ascending order
+        System.out.println("Node values in ascending order:");
+        displayAscending(skewedRoot);
+    }
+}
