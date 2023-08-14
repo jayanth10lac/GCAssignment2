@@ -1,0 +1,48 @@
+package com.greatlearning.DSAssignment.solution.question1;
+
+import java.util.*;
+
+public class Assemble_Floor {
+    public static void main(String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+        // take the input for number of floor
+        Stack<Integer> stack = new Stack<Integer>();
+        System.out.println("Enter the total no of floors in the building:");
+        int no_of_floors = sc.nextInt();
+
+        if (no_of_floors <= 0) {
+            System.out.println("Invalid Number");
+            return;
+        }
+
+        Integer arr_floor_size[];
+        arr_floor_size = new Integer[no_of_floors + 1];
+
+        for (int i = 1; i <= no_of_floors; i++) {
+            stack.push(i);
+            System.out.println("Enter the floor size given on day : " + i);
+            arr_floor_size[i] = sc.nextInt();
+            if (arr_floor_size[i] <= 0) {
+                System.out.println("Invalid Number");
+                return;
+            }
+        }
+
+        int largest_floor_size = no_of_floors;
+        int current_floor = 1;
+
+        while (current_floor <= no_of_floors) {
+            System.out.println("Day: " + current_floor);
+            
+            if (arr_floor_size[current_floor] == largest_floor_size) {
+                System.out.print(arr_floor_size[current_floor] + " ");
+                largest_floor_size--;
+            } else {
+                System.out.print("\n");
+            }
+
+            current_floor++;
+        }
+    }
+}
